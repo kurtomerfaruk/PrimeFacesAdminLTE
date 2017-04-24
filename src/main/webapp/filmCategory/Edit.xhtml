@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <coco:edit id="FilmCategoryEditForm"
+                   actionListener="#{filmCategoryController.save}"
+                   renderedListener="#{filmCategoryController.selected!=null}"
+                   listForm="FilmCategoryListForm"
+                   widgetVar="FilmCategoryEditDialog">
+
+            <h:outputLabel value="#{messages.id}" for="id" />
+            <h:outputText id="id" value="#{filmCategoryController.selected.filmCategoryId}" />
+
+            <p:outputLabel value="#{messages.EditFilmCategoryLabel_film}" for="film" />
+            <p:selectOneMenu id="film" value="#{filmCategoryController.selected.film}" required="true" class="select-one-menu-width" filter="true" requiredMessage="#{messages.CreateFilmCategoryRequiredMessage_film}" converter="filmConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{filmController.items}"
+                               var="filmItem"
+                               itemValue="#{filmItem}"
+                               itemLabel="#{filmItem.description.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.EditFilmCategoryLabel_category}" for="category" />
+            <p:selectOneMenu id="category" value="#{filmCategoryController.selected.category}" required="true" class="select-one-menu-width" filter="true" requiredMessage="#{messages.CreateFilmCategoryRequiredMessage_category}" converter="categoryConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{categoryController.items}"
+                               var="categoryItem"
+                               itemValue="#{categoryItem}"
+                               itemLabel="#{categoryItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:edit>
+
+    </ui:composition>
+
+</html>

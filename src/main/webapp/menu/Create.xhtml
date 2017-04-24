@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="MenuCreateForm"
+                     renderedListener="#{menuController.selected != null}"
+                     widgetVar="MenuCreateDialog"
+                     actionListener="#{menuController.saveNew}"
+                     listForm="MenuListForm">
+
+            <p:outputLabel value="#{messages.CreateMenuLabel_menuName}" for="menuName" />
+            <p:inputText id="menuName" value="#{menuController.selected.menuName}" title="#{messages.CreateMenuTitle_menuName}" size="45" maxlength="45" required="true"/>
+
+            <p:outputLabel value="#{messages.CreateMenuLabel_topMenuId}" for="topMenuId" />
+            <p:inputText id="topMenuId" value="#{menuController.selected.topMenuId}" title="#{messages.CreateMenuTitle_topMenuId}"/>
+
+            <p:outputLabel value="#{messages.CreateMenuLabel_menuType}" for="menuType" />
+            <p:inputText id="menuType" value="#{menuController.selected.menuType}" title="#{messages.CreateMenuTitle_menuType}"/>
+
+            <p:outputLabel value="#{messages.CreateMenuLabel_menuLink}" for="menuLink" />
+            <p:inputText id="menuLink" value="#{menuController.selected.menuLink}" title="#{messages.CreateMenuTitle_menuLink}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.CreateMenuLabel_icon}" for="icon" />
+            <p:inputText id="icon" value="#{menuController.selected.icon}" title="#{messages.CreateMenuTitle_icon}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.CreateMenuLabel_queue}" for="queue" />
+            <p:inputText id="queue" value="#{menuController.selected.queue}" title="#{messages.CreateMenuTitle_queue}"/>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

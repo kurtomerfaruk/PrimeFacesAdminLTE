@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="StoreCreateForm"
+                     renderedListener="#{storeController.selected != null}"
+                     widgetVar="StoreCreateDialog"
+                     actionListener="#{storeController.saveNew}"
+                     listForm="StoreListForm">
+
+            <p:outputLabel value="#{messages.CreateStoreLabel_managerStaffId}" for="managerStaffId" />
+            <p:selectOneMenu id="managerStaffId" value="#{storeController.selected.managerStaffId}" required="true" requiredMessage="#{messages.CreateStoreRequiredMessage_managerStaffId}" converter="staffConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{staffController.items}"
+                               var="managerStaffIdItem"
+                               itemValue="#{managerStaffIdItem}"
+                               itemLabel="#{managerStaffIdItem.firstName.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateStoreLabel_addressId}" for="addressId" />
+            <p:selectOneMenu id="addressId" value="#{storeController.selected.addressId}" required="true" requiredMessage="#{messages.CreateStoreRequiredMessage_addressId}" converter="addressConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{addressController.items}"
+                               var="addressIdItem"
+                               itemValue="#{addressIdItem}"
+                               itemLabel="#{addressIdItem.addressId.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

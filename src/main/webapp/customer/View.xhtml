@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="CustomerViewForm"
+                   widgetVar="CustomerViewDialog"
+                   renderedListener="#{customerController.selected != null}">
+
+            <h:outputText value="#{messages.ViewCustomerLabel_customerId}"/>
+            <h:outputText value="#{customerController.selected.customerId}" title="#{messages.ViewCustomerTitle_customerId}"/>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_firstName}"/>
+            <h:outputText value="#{customerController.selected.firstName}" title="#{messages.ViewCustomerTitle_firstName}"/>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_lastName}"/>
+            <h:outputText value="#{customerController.selected.lastName}" title="#{messages.ViewCustomerTitle_lastName}"/>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_email}"/>
+            <h:outputText value="#{customerController.selected.email}" title="#{messages.ViewCustomerTitle_email}"/>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_active}"/>
+            <h:selectBooleanCheckbox id="active" value="#{customerController.selected.active}" title="#{messages.EditCustomerTitle_active}" required="true" requiredMessage="#{messages.EditCustomerRequiredMessage_active}" disabled="true"/>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_createDate}"/>
+            <h:outputText value="#{customerController.selected.createDate}" title="#{messages.ViewCustomerTitle_createDate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_lastUpdate}"/>
+            <h:outputText value="#{customerController.selected.lastUpdate}" title="#{messages.ViewCustomerTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_storeId}"/>
+            <h:outputText value="#{customerController.selected.storeId.storeId}"/>
+
+            <h:outputText value="#{messages.ViewCustomerLabel_addressId}"/>
+            <h:outputText value="#{customerController.selected.addressId.addressId}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

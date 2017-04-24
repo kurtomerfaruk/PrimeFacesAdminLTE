@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="AuditListForm" class="form-height">
+
+        <script type="text/javascript">
+            $(function () {
+                var windowH = $(window).height();
+                windowH -= 130;
+                $('.form-height').css({'height': windowH + 'px'});
+
+                $(window).resize(function () {
+                    var windowH = $(window).height();
+                    windowH -= 130;
+                    $('.form-height').css({'height': windowH + 'px'});
+                })
+            });
+
+        </script>
+        <p:dataTable id="datalist"
+                     value="#{auditController.lazyList}"
+                     var="item"
+                     rowKey="#{item.id}"
+                     paginator="true"
+                     rows="50"
+                     rowsPerPageTemplate="50,100,200"
+                     selectionMode="single"
+                     selection="#{auditController.selected}"
+                     paginatorPosition="bottom"
+                     lazy="true"
+                     widgetVar="datalistWidget"
+                     scrollable="true"
+                     scrollHeight="100%"
+                     scrollWidth="auto"
+                     resizableColumns="true"
+                     liveResize="true"
+                     pageLinks="1"
+                     reflow="true"
+                     filteredValue="#{auditController.filtered}"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                     currentPageReportTemplate="#{messages.currentPageTemplate}">
+
+            <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                <f:facet name="header">
+                    <h:outputText value="Id"/>
+                </f:facet>
+                <h:outputText value="#{item.id}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.auditUser}" filterBy="#{item.auditUser}">
+                <f:facet name="header">
+                    <h:outputText value="Audit User"/>
+                </f:facet>
+                <h:outputText value="#{item.auditUser.fullName}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.eventId}" filterBy="#{item.eventId}">
+                <f:facet name="header">
+                    <h:outputText value="Event Id"/>
+                </f:facet>
+                <h:outputText value="#{item.eventId}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.tableName}" filterBy="#{item.tableName}">
+                <f:facet name="header">
+                    <h:outputText value="Table Name"/>
+                </f:facet>
+                <h:outputText value="#{item.tableName}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.operation}" filterBy="#{item.operation}">
+                <f:facet name="header">
+                    <h:outputText value="Operation"/>
+                </f:facet>
+                <h:outputText value="#{item.operation}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.operationTime}" filterBy="#{item.operationTime}">
+                <f:facet name="header">
+                    <h:outputText value="Operation Time"/>
+                </f:facet>
+                <h:outputText value="#{item.operationTime}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm:ss"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    Field Detail
+                </f:facet>
+                <ui:repeat var="fields" value="#{item.field}">
+                    <h:panelGrid columns="2" style="border-width: 1px">
+                        <h:outputText value="Id : "/>
+                        <h:outputText value="#{fields.id}"/>
+                        
+                        <h:outputText value="Field Name : "/>
+                        <h:outputText value="#{fields.fieldName}"/>
+                        
+                        <h:outputText value="Field Value : "/>
+                        <h:outputText value="#{fields.fieldValue}"/>
+                    </h:panelGrid>
+
+                </ui:repeat>
+
+            </p:column>
+
+
+            <f:facet name="{Exporters}">
+
+                <div class="footer-right">
+                    <h:commandLink>
+                        <p:graphicImage name="images/excel.png" width="24"/>
+                        <p:dataExporter type="xls" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="images/pdf.png" width="24"/>
+                        <p:dataExporter type="pdf" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="images/csv.png" width="24"/>
+                        <p:dataExporter type="csv" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="images/xml.png" width="24"/>
+                        <p:dataExporter type="xml" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+                </div>
+
+            </f:facet>
+
+
+        </p:dataTable>
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

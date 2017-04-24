@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="FilmViewForm"
+                   widgetVar="FilmViewDialog"
+                   renderedListener="#{filmController.selected != null}">
+
+            <h:outputText value="#{messages.ViewFilmLabel_filmId}"/>
+            <h:outputText value="#{filmController.selected.filmId}" title="#{messages.ViewFilmTitle_filmId}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_title}"/>
+            <h:outputText value="#{filmController.selected.title}" title="#{messages.ViewFilmTitle_title}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_description}"/>
+            <h:outputText value="#{filmController.selected.description}" title="#{messages.ViewFilmTitle_description}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_releaseYear}"/>
+            <h:outputText value="#{filmController.selected.releaseYear}" title="#{messages.ViewFilmTitle_releaseYear}">
+                <f:convertDateTime pattern="MM/dd/yyyy" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewFilmLabel_rentalDuration}"/>
+            <h:outputText value="#{filmController.selected.rentalDuration}" title="#{messages.ViewFilmTitle_rentalDuration}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_rentalRate}"/>
+            <h:outputText value="#{filmController.selected.rentalRate}" title="#{messages.ViewFilmTitle_rentalRate}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_length}"/>
+            <h:outputText value="#{filmController.selected.length}" title="#{messages.ViewFilmTitle_length}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_replacementCost}"/>
+            <h:outputText value="#{filmController.selected.replacementCost}" title="#{messages.ViewFilmTitle_replacementCost}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_rating}"/>
+            <h:outputText value="#{filmController.selected.rating}" title="#{messages.ViewFilmTitle_rating}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_specialFeatures}"/>
+            <h:outputText value="#{filmController.selected.specialFeatures}" title="#{messages.ViewFilmTitle_specialFeatures}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_lastUpdate}"/>
+            <h:outputText value="#{filmController.selected.lastUpdate}" title="#{messages.ViewFilmTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewFilmLabel_originalLanguageId}"/>
+            <h:outputText value="#{filmController.selected.originalLanguageId.name}"/>
+
+            <h:outputText value="#{messages.ViewFilmLabel_languageId}"/>
+            <h:outputText value="#{filmController.selected.languageId.name}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

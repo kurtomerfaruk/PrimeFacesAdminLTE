@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="StaffListForm" class="form-height">
+
+        <p:contextMenu id="StaffDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('StaffListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('StaffListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('StaffListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('StaffListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.StaffMenuItem_store}" icon="ui-icon-search"  actionListener="#{staffController.prepareStore}" update=":StoreViewForm:StoreViewForm" oncomplete="PF('StoreViewDialog').show()" disabled="#{empty staffController.selected.store}"/>  
+            <p:menuitem value="#{messages.StaffMenuItem_paymentList}" icon="ui-icon-search"  action="#{staffController.navigatePaymentList}" disabled="#{empty staffController.selected.paymentList}" ajax="false"/>  
+            <p:menuitem value="#{messages.StaffMenuItem_rentalList}" icon="ui-icon-search"  action="#{staffController.navigateRentalList}" disabled="#{empty staffController.selected.rentalList}" ajax="false"/>  
+            <p:menuitem value="#{messages.StaffMenuItem_storeId}" icon="ui-icon-search"  actionListener="#{staffController.prepareStoreId}" update=":StoreViewForm:StoreViewForm" oncomplete="PF('StoreViewDialog').show()" disabled="#{empty staffController.selected.storeId}"/>  
+            <p:menuitem value="#{messages.StaffMenuItem_addressId}" icon="ui-icon-search"  actionListener="#{staffController.prepareAddressId}" update=":AddressViewForm:AddressViewForm" oncomplete="PF('AddressViewDialog').show()" disabled="#{empty staffController.selected.addressId}"/>  
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{staffController.lazyList}"
+                        rowKey="#{item.staffId}"
+                        selection="#{staffController.selected}"
+                        filtered="#{staffController.filtered}"
+                        rowselect=":StaffListForm:datalist:datalist:createButton,:StaffListForm:datalist:datalist:viewButton,:StaffListForm:datalist:datalist:editButton,:StaffListForm:datalist:datalist:deleteButton,:StaffListForm:StaffDataTableContextMenu"
+                        rowDblselect="document.getElementById('StaffListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":StaffListForm:datalist:datalist:createButton :StaffListForm:datalist:datalist:viewButton :StaffListForm:datalist:datalist:editButton :StaffListForm:datalist:datalist:deleteButton"
+                        selectListener="#{staffController.resetParents()}">
+
+            <p:ajax event="colResize" listener="#{staffController.onResize}"/>
+
+            <f:facet name="header">
+                <table style="width: 100%;">
+                    <tr style="width: 100%">
+                        <td style="width: 20%" class="no-border">
+
+                        </td>
+                        <td style="width: 60%" class="no-border">
+                            
+
+                        </td>
+                        <td style="width: 20%" class="no-border">
+                            
+                        </td>
+                    </tr>
+                </table>
+                <div class="row row-nomargin">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <h:outputText value="#{messages.ListStaffTitle}"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="pull-right">
+                            <p:columnToggler datasource="datalist" trigger="toggler" >
+                                <p:ajax event="toggle" listener="#{staffController.onToggle}" />
+                            </p:columnToggler>
+                            <p:commandButton id="toggler" type="button" value="#{messages.Columns}" class="btn-primary" icon="fa fa-list"/>
+                            <p:commandButton value="#{messages.Save}" actionListener="#{staffController.columnSave()}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:columns value="#{staffController.columns}" styleClass="#{column.property.contains('active') ? 'text-center' :''}" var="column" columnIndexVar="colIndex" sortBy="#{item[column.property]}" filterBy="#{item[column.property]}" visible="#{staffController.listVisible[colIndex]}" exportable="#{staffController.listVisible[colIndex]}" width="#{staffController.listWidth[colIndex]}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}" />
+                </f:facet>
+
+                <h:outputText value="#{item[column.property]}" rendered="#{column.date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                
+                <h:outputText value="#{item[column.property]}" rendered="#{!column.date}"/>
+
+            </p:columns>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn-primary" icon="fa fa-plus"   value="#{messages.Create}" actionListener="#{staffController.prepareCreate}" update=":StaffCreateForm:StaffCreateForm" oncomplete="PF('StaffCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn-primary" icon="fa fa-search" value="#{messages.View}" update=":StaffViewForm:StaffViewForm" oncomplete="PF('StaffViewDialog').show()" disabled="#{empty staffController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   styleClass="btn-primary" icon="fa fa-pencil" value="#{messages.Edit}" update=":StaffEditForm:StaffEditForm" oncomplete="PF('StaffEditDialog').show()" disabled="#{empty staffController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn-primary" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{staffController.delete}" update=":growl,datalist" disabled="#{empty staffController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="RentalListForm" class="form-height">
+
+        <p:contextMenu id="RentalDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('RentalListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('RentalListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('RentalListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('RentalListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.RentalMenuItem_paymentList}" icon="ui-icon-search"  action="#{rentalController.navigatePaymentList}" disabled="#{empty rentalController.selected.paymentList}" ajax="false"/>  
+            <p:menuitem value="#{messages.RentalMenuItem_staffId}" icon="ui-icon-search"  actionListener="#{rentalController.prepareStaffId}" update=":StaffViewForm:StaffViewForm" oncomplete="PF('StaffViewDialog').show()" disabled="#{empty rentalController.selected.staffId}"/>  
+            <p:menuitem value="#{messages.RentalMenuItem_inventoryId}" icon="ui-icon-search"  actionListener="#{rentalController.prepareInventoryId}" update=":InventoryViewForm:InventoryViewForm" oncomplete="PF('InventoryViewDialog').show()" disabled="#{empty rentalController.selected.inventoryId}"/>  
+            <p:menuitem value="#{messages.RentalMenuItem_customerId}" icon="ui-icon-search"  actionListener="#{rentalController.prepareCustomerId}" update=":CustomerViewForm:CustomerViewForm" oncomplete="PF('CustomerViewDialog').show()" disabled="#{empty rentalController.selected.customerId}"/>  
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{rentalController.lazyList}"
+                        rowKey="#{item.rentalId}"
+                        selection="#{rentalController.selected}"
+                        filtered="#{rentalController.filtered}"
+                        rowselect=":RentalListForm:datalist:datalist:createButton,:RentalListForm:datalist:datalist:viewButton,:RentalListForm:datalist:datalist:editButton,:RentalListForm:datalist:datalist:deleteButton,:RentalListForm:RentalDataTableContextMenu"
+                        rowDblselect="document.getElementById('RentalListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":RentalListForm:datalist:datalist:createButton :RentalListForm:datalist:datalist:viewButton :RentalListForm:datalist:datalist:editButton :RentalListForm:datalist:datalist:deleteButton"
+                        selectListener="#{rentalController.resetParents()}">
+
+            <p:ajax event="colResize" listener="#{rentalController.onResize}"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{messages.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-6">
+                        <h:outputText value="#{messages.ListRentalTitle}"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="pull-right">
+                            <p:columnToggler datasource="datalist" trigger="toggler" >
+                                <p:ajax event="toggle" listener="#{rentalController.onToggle}" />
+                            </p:columnToggler>  
+                            <p:commandButton id="toggler" type="button" value="#{messages.Columns}" class="btn-primary" icon="fa fa-list"/>
+                            <p:commandButton value="#{messages.Save}" actionListener="#{rentalController.columnSave()}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:columns value="#{rentalController.columns}" var="column" columnIndexVar="colIndex" sortBy="#{item[column.property]}" filterBy="#{item[column.property]}" visible="#{rentalController.listVisible[colIndex]}" exportable="#{rentalController.listVisible[colIndex]}" width="#{rentalController.listWidth[colIndex]}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}" />
+                </f:facet>
+
+                <h:outputText value="#{item[column.property]}" rendered="#{column.date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                
+                <h:outputText value="#{item[column.property]}" rendered="#{!column.date}"/>
+
+            </p:columns>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn-primary" icon="fa fa-plus"   value="#{messages.Create}" actionListener="#{rentalController.prepareCreate}" update=":RentalCreateForm:RentalCreateForm" oncomplete="PF('RentalCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn-primary" icon="fa fa-search" value="#{messages.View}" update=":RentalViewForm:RentalViewForm" oncomplete="PF('RentalViewDialog').show()" disabled="#{empty rentalController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   styleClass="btn-primary" icon="fa fa-pencil" value="#{messages.Edit}" update=":RentalEditForm:RentalEditForm" oncomplete="PF('RentalEditDialog').show()" disabled="#{empty rentalController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn-primary" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{rentalController.delete}" update=":growl,datalist" disabled="#{empty rentalController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton> 
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+        <ui:include src="/confirmation.xhtml"/>
+
+    </h:form>
+
+</ui:composition>

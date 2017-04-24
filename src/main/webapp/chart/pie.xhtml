@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:wc="http://googlecode.com/wickedcharts">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form id="CityListForm">
+
+                <h:outputStylesheet library="css" name="wickedcharts.css"/>
+
+                <h:outputStylesheet library="css" name="shCoreEclipse.css"/>
+                <h:outputStylesheet library="css" name="shThemeEclipse.css"/>
+                <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+                <h:outputScript library="scripts" name="highcharts.js"/>
+                <h:outputScript library="scripts" name="highcharts-more.js"/>
+                <h:outputScript library="scripts" name="exporting.js"/>
+
+                <script type="text/javascript">
+                    $(function () {
+                        var windowH = $(window).height();
+                        windowH -= 5;
+                        $('#chart').css({'height': windowH + 'px'});
+
+                        $(window).resize(function () {
+                            var windowH = $(window).height();
+                            windowH -= 5;
+                            $('#chart').css({'height': windowH + 'px'});
+                        })
+                    });
+
+                </script>
+
+                <wc:chart id="chart" options="#{showcase.options}" theme="#{showcase.theme}" style="width: 100%;height: 100%"/>
+            </h:form>
+
+
+        </h:body>
+
+    </f:view>
+</html>
+

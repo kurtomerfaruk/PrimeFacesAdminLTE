@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{messages.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="#{messages.Maintenance}">
+                    <p:menuitem value="#{messages.ActorHeading}..." outcome="/actor/index" />
+<!--                    <p:menuitem value="#{messages.AddressHeading}..." outcome="/address/index" />
+                    <p:menuitem value="#{messages.CategoryHeading}..." outcome="/category/index" />
+                    <p:menuitem value="#{messages.CityHeading}..." outcome="/city/index" />
+                    <p:menuitem value="#{messages.CountryHeading}..." outcome="/country/index" />
+                    <p:menuitem value="#{messages.CustomerHeading}..." outcome="/customer/index" />
+                    <p:menuitem value="#{messages.FilmHeading}..." outcome="/film/index" />
+                    <p:menuitem value="#{messages.FilmActorHeading}..." outcome="/filmActor/index" />
+                    <p:menuitem value="#{messages.FilmCategoryHeading}..." outcome="/filmCategory/index" />
+                    <p:menuitem value="#{messages.FilmTextHeading}..." outcome="/filmText/index" />
+                    <p:menuitem value="#{messages.InventoryHeading}..." outcome="/inventory/index" />
+                    <p:menuitem value="#{messages.LanguageHeading}..." outcome="/language/index" />
+                    <p:menuitem value="#{messages.PaymentHeading}..." outcome="/payment/index" />
+                    <p:menuitem value="#{messages.RentalHeading}..." outcome="/rental/index" />
+                    <p:menuitem value="#{messages.StaffHeading}..." outcome="/staff/index" />
+                    <p:menuitem value="#{messages.StoreHeading}..." outcome="/store/index" />-->
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="LanguageEditForm"
+                   renderedListener="#{languageController.selected != null}"
+                   widgetVar="LanguageEditDialog"
+                   actionListener="#{languageController.save}"
+                   listForm="LanguageListForm">
+
+            <h:outputLabel value="#{messages.EditLanguageLabel_languageId}" for="languageId" />
+            <h:outputText id="languageId" value="#{languageController.selected.languageId}" />
+
+            <p:outputLabel value="#{messages.EditLanguageLabel_name}" for="name" />
+            <p:inputText id="name" value="#{languageController.selected.name}" title="#{messages.EditLanguageTitle_name}" required="true" requiredMessage="#{messages.EditLanguageRequiredMessage_name}" size="20" maxlength="20"/>
+
+        </coco:edit>
+
+
+    </ui:composition>
+
+</html>

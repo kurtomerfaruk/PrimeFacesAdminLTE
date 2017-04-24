@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="FilmCreateForm"
+                     renderedListener="#{filmController.selected != null}"
+                     widgetVar="FilmCreateDialog"
+                     actionListener="#{filmController.saveNew}"
+                     listForm="FilmListForm">
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_title}" for="title" />
+            <p:inputText id="title" value="#{filmController.selected.title}" title="#{messages.CreateFilmTitle_title}" required="true" requiredMessage="#{messages.CreateFilmRequiredMessage_title}" size="50" maxlength="255"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_description}" for="description" />
+            <p:inputTextarea rows="4" autoResize="false" class="full-width" id="description" value="#{filmController.selected.description}" title="#{messages.CreateFilmTitle_description}" />
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_releaseYear}" for="releaseYear" />
+            <p:calendar id="releaseYear" pattern="MM/dd/yyyy" value="#{filmController.selected.releaseYear}" title="#{messages.CreateFilmTitle_releaseYear}"  showOn="button"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_rentalDuration}" for="rentalDuration" />
+            <p:inputText id="rentalDuration" value="#{filmController.selected.rentalDuration}" title="#{messages.CreateFilmTitle_rentalDuration}" required="true" requiredMessage="#{messages.CreateFilmRequiredMessage_rentalDuration}"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_rentalRate}" for="rentalRate" />
+            <p:inputText id="rentalRate" value="#{filmController.selected.rentalRate}" title="#{messages.CreateFilmTitle_rentalRate}" required="true" requiredMessage="#{messages.CreateFilmRequiredMessage_rentalRate}"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_length}" for="length" />
+            <p:inputText id="length" value="#{filmController.selected.length}" title="#{messages.CreateFilmTitle_length}"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_replacementCost}" for="replacementCost" />
+            <p:inputText id="replacementCost" value="#{filmController.selected.replacementCost}" title="#{messages.CreateFilmTitle_replacementCost}" required="true" requiredMessage="#{messages.CreateFilmRequiredMessage_replacementCost}"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_rating}" for="rating" />
+            <p:inputText id="rating" value="#{filmController.selected.rating}" title="#{messages.CreateFilmTitle_rating}" size="5" maxlength="5"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_specialFeatures}" for="specialFeatures" />
+            <p:inputText id="specialFeatures" value="#{filmController.selected.specialFeatures}" title="#{messages.CreateFilmTitle_specialFeatures}" size="50" maxlength="54"/>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_originalLanguageId}" for="originalLanguageId" />
+            <p:selectOneMenu id="originalLanguageId" value="#{filmController.selected.originalLanguageId}"  converter="languageConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{languageController.items}"
+                               var="originalLanguageIdItem"
+                               itemValue="#{originalLanguageIdItem}"
+                               itemLabel="#{originalLanguageIdItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateFilmLabel_languageId}" for="languageId" />
+            <p:selectOneMenu id="languageId" value="#{filmController.selected.languageId}" required="true" filter="true" requiredMessage="#{messages.CreateFilmRequiredMessage_languageId}" converter="languageConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{languageController.items}"
+                               var="languageIdItem"
+                               itemValue="#{languageIdItem}"
+                               itemLabel="#{languageIdItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

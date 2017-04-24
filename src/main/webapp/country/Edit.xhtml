@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="CountryEditForm"
+                   renderedListener="#{countryController.selected != null}"
+                   widgetVar="CountryEditDialog"
+                   actionListener="#{countryController.save}"
+                   listForm="CountryListForm">
+
+            <h:outputLabel value="#{messages.EditCountryLabel_countryId}" for="countryId" />
+            <h:outputText id="countryId" value="#{countryController.selected.countryId}" />
+
+            <p:outputLabel value="#{messages.EditCountryLabel_country}" for="country" />
+            <p:inputText id="country" value="#{countryController.selected.country}" title="#{messages.EditCountryTitle_country}" required="true" requiredMessage="#{messages.EditCountryRequiredMessage_country}" size="50" maxlength="50"/>
+
+        </coco:edit>
+
+
+    </ui:composition>
+
+</html>

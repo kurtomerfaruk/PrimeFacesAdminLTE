@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="AddressCreateForm"
+                     renderedListener="#{addressController.selected != null}"
+                     widgetVar="AddressCreateDialog"
+                     actionListener="#{addressController.saveNew}"
+                     listForm="AddressListForm">
+
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_address}" for="address" />
+            <p:inputText id="address" value="#{addressController.selected.address}" title="#{messages.CreateAddressTitle_address}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_address}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_address2}" for="address2" />
+            <p:inputText id="address2" value="#{addressController.selected.address2}" title="#{messages.CreateAddressTitle_address2}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_district}" for="district" />
+            <p:inputText id="district" value="#{addressController.selected.district}" title="#{messages.CreateAddressTitle_district}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_district}" size="20" maxlength="20"/>
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_postalCode}" for="postalCode" />
+            <p:inputText id="postalCode" value="#{addressController.selected.postalCode}" title="#{messages.CreateAddressTitle_postalCode}" size="10" maxlength="10"/>
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_phone}" for="phone" />
+            <p:inputText id="phone" value="#{addressController.selected.phone}" title="#{messages.CreateAddressTitle_phone}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_phone}" size="20" maxlength="20"/>
+
+            <p:outputLabel value="#{messages.CreateAddressLabel_location}" for="location" />
+            <p:inputTextarea rows="4" autoResize="false" class="full-width" id="location" value="#{addressController.selected.location}" title="#{messages.CreateAddressTitle_location}" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_location}"/>
+
+            <p:outputLabel value="#{messages.CityHeading}" for="cityId" />
+            <p:selectOneMenu id="cityId" value="#{addressController.selected.cityId}" filter="true" required="true" requiredMessage="#{messages.CreateAddressRequiredMessage_cityId}" converter="cityConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{cityController.items}"
+                               var="cityIdItem"
+                               itemValue="#{cityIdItem}"
+                               itemLabel="#{cityIdItem.city.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

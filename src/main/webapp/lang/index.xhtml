@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form styleClass="form-height">
+        <div class="row">
+            <div class="col-lg-6 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>Türkçe</h3>
+                        <p> &nbsp;</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-windows"></i>
+                    </div>
+                    <p:commandLink class="small-box-footer" value="Değiştir" action="#{localeController.changeLanguage('tr')}" update=":growl" rendered="true" resetValues="true" global="true">
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </p:commandLink>
+                </div>
+            </div><!-- ./col -->
+            <div class="col-lg-6 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-orange">
+                    <div class="inner">
+                        <h3>English</h3>
+                        <p> &nbsp;</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-language"></i>
+                    </div>
+                    <p:commandLink value="Change" class="small-box-footer fa fa-arrow-circle-right" action="#{localeController.changeLanguage('en')}" update=":growl">
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </p:commandLink>
+                </div>
+            </div><!-- ./col -->
+        </div><!-- /.row -->
+    </h:form>
+</ui:composition>

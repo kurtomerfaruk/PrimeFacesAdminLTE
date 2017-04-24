@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="FilmCategoryListForm" class="form-height">
+
+        <p:contextMenu id="FilmCategoryDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('FilmCategoryListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('FilmCategoryListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('FilmCategoryListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('FilmCategoryListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.FilmCategoryMenuItem_film}" icon="ui-icon-search"  actionListener="#{filmCategoryController.prepareFilm}" update=":FilmViewForm:FilmViewForm" oncomplete="PF('FilmViewDialog').show()" disabled="#{empty filmCategoryController.selected.film}"/>  
+            <p:menuitem value="#{messages.FilmCategoryMenuItem_category}" icon="ui-icon-search"  actionListener="#{filmCategoryController.prepareCategory}" update=":CategoryViewForm:CategoryViewForm" oncomplete="PF('CategoryViewDialog').show()" disabled="#{empty filmCategoryController.selected.category}"/>  
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{filmCategoryController.lazyList}"
+                        rowKey="#{item.filmCategoryId}"
+                        selection="#{filmCategoryController.selected}"
+                        filtered="#{filmCategoryController.filtered}"
+                        rowselect=":FilmCategoryListForm:datalist:datalist:createButton,:FilmCategoryListForm:datalist:datalist:viewButton,:FilmCategoryListForm:datalist:datalist:editButton,:FilmCategoryListForm:datalist:datalist:deleteButton,:FilmCategoryListForm:FilmCategoryDataTableContextMenu"
+                        rowDblselect="document.getElementById('FilmCategoryListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":FilmCategoryListForm:datalist:datalist:createButton :FilmCategoryListForm:datalist:datalist:viewButton :FilmCategoryListForm:datalist:datalist:editButton :FilmCategoryListForm:datalist:datalist:deleteButton"
+                        selectListener="#{filmCategoryController.resetParents()}">
+
+            <p:ajax event="colResize" listener="#{filmCategoryController.onResize}"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{messages.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-6">
+                        <h:outputText value="#{messages.ListFilmCategoryTitle}"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="pull-right">
+                            <p:columnToggler datasource="datalist" trigger="toggler" >
+                                <p:ajax event="toggle" listener="#{filmCategoryController.onToggle}" />
+                            </p:columnToggler>
+                            <p:commandButton id="toggler" type="button" value="#{messages.Columns}" class="btn-primary" icon="fa fa-list"/>
+                            <p:commandButton value="#{messages.Save}" actionListener="#{filmCategoryController.columnSave()}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:columns value="#{filmCategoryController.columns}" var="column" columnIndexVar="colIndex" sortBy="#{item[column.property]}" filterBy="#{item[column.property]}" visible="#{filmCategoryController.listVisible[colIndex]}" exportable="#{filmCategoryController.listVisible[colIndex]}" width="#{filmCategoryController.listWidth[colIndex]}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}" />
+                </f:facet>
+
+                <h:outputText value="#{item[column.property]}" rendered="#{column.date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                
+                <h:outputText value="#{item[column.property]}" rendered="#{!column.date}"/>
+
+            </p:columns>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.Create}" actionListener="#{filmCategoryController.prepareCreate}" update=":FilmCategoryCreateForm:FilmCategoryCreateForm" oncomplete="PF('FilmCategoryCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{messages.View}" update=":FilmCategoryViewForm:FilmCategoryViewForm" oncomplete="PF('FilmCategoryViewDialog').show()" disabled="#{empty filmCategoryController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{messages.Edit}" update=":FilmCategoryEditForm:FilmCategoryEditForm" oncomplete="PF('FilmCategoryEditDialog').show()" disabled="#{empty filmCategoryController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{filmCategoryController.delete}" update=":growl,datalist" disabled="#{empty filmCategoryController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

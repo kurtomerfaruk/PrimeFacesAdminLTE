@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="RentalViewForm"
+                   widgetVar="RentalViewDialog"
+                   renderedListener="#{rentalController.selected != null}">
+
+            <h:outputText value="#{messages.ViewRentalLabel_rentalId}"/>
+            <h:outputText value="#{rentalController.selected.rentalId}" title="#{messages.ViewRentalTitle_rentalId}"/>
+
+            <h:outputText value="#{messages.ViewRentalLabel_rentalDate}"/>
+            <h:outputText value="#{rentalController.selected.rentalDate}" title="#{messages.ViewRentalTitle_rentalDate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewRentalLabel_returnDate}"/>
+            <h:outputText value="#{rentalController.selected.returnDate}" title="#{messages.ViewRentalTitle_returnDate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewRentalLabel_lastUpdate}"/>
+            <h:outputText value="#{rentalController.selected.lastUpdate}" title="#{messages.ViewRentalTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewRentalLabel_staffId}"/>
+            <h:outputText value="#{rentalController.selected.staffId.firstName}"/>
+
+            <h:outputText value="#{messages.ViewRentalLabel_inventoryId}"/>
+            <h:outputText value="#{rentalController.selected.inventoryId.inventoryId}"/>
+
+            <h:outputText value="#{messages.ViewRentalLabel_customerId}"/>
+            <h:outputText value="#{rentalController.selected.customerId.firstName}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

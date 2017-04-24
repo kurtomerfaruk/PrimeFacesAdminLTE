@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="MenuViewForm"
+                   widgetVar="MenuViewDialog"
+                   renderedListener="#{menuController.selected != null}">
+
+            <h:outputText value="#{messages.ViewMenuLabel_id}"/>
+            <h:outputText value="#{menuController.selected.id}" title="#{messages.ViewMenuTitle_id}"/>
+
+            <h:outputText value="#{messages.ViewMenuLabel_menuName}"/>
+            <h:outputText value="#{menuController.selected.menuName}" title="#{messages.ViewMenuTitle_menuName}"/>
+
+            <h:outputText value="#{messages.ViewMenuLabel_topMenuId}"/>
+            <h:outputText value="#{menuController.selected.topMenuId}" title="#{messages.ViewMenuTitle_topMenuId}"/>
+
+            <h:outputText value="#{messages.ViewMenuLabel_menuType}"/>
+            <h:outputText value="#{menuController.selected.menuType}" title="#{messages.ViewMenuTitle_menuType}"/>
+
+            <h:outputText value="#{messages.ViewMenuLabel_menuLink}"/>
+            <h:outputText value="#{menuController.selected.menuLink}" title="#{messages.ViewMenuTitle_menuLink}"/>
+
+            <h:outputText value="#{messages.ViewMenuLabel_icon}"/>
+            <h:outputText value="#{menuController.selected.icon}" title="#{messages.ViewMenuTitle_icon}"/>
+
+            <h:outputText value="#{messages.ViewMenuLabel_queue}"/>
+            <h:outputText value="#{menuController.selected.queue}" title="#{messages.ViewMenuTitle_queue}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

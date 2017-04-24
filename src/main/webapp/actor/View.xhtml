@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="ActorViewForm"
+                   widgetVar="ActorViewDialog"
+                   renderedListener="#{actorController.selected != null}">
+
+            <h:outputText value="#{messages.ViewActorLabel_actorId}"/>
+            <h:outputText value="#{actorController.selected.actorId}" title="#{messages.ViewActorTitle_actorId}"/>
+
+            <h:outputText value="#{messages.ViewActorLabel_firstName}"/>
+            <h:outputText value="#{actorController.selected.firstName}" title="#{messages.ViewActorTitle_firstName}"/>
+
+            <h:outputText value="#{messages.ViewActorLabel_lastName}"/>
+            <h:outputText value="#{actorController.selected.lastName}" title="#{messages.ViewActorTitle_lastName}"/>
+
+            <h:outputText value="#{messages.ViewActorLabel_lastUpdate}"/>
+            <h:outputText value="#{actorController.selected.lastUpdate}" title="#{messages.ViewActorTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+        </coco:view>
+
+
+    </ui:composition>
+
+</html>

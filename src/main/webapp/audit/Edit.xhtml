@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="CityEditForm"
+                   renderedListener="#{cityController.selected != null}"
+                   widgetVar="CityEditDialog"
+                   actionListener="#{cityController.save}"
+                   listForm="CityListForm">
+
+            <h:outputLabel value="#{messages.EditCityLabel_cityId}" for="cityId" />
+            <h:outputText id="cityId" value="#{cityController.selected.cityId}" />
+
+            <p:outputLabel value="#{messages.EditCityLabel_city}" for="city" />
+            <p:inputText id="city" value="#{cityController.selected.city}" title="#{messages.EditCityTitle_city}" required="true" requiredMessage="#{messages.EditCityRequiredMessage_city}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.EditCityLabel_countryId}" for="countryId" />
+            <p:selectOneMenu id="countryId" value="#{cityController.selected.countryId}" filter="true" required="true" requiredMessage="#{messages.EditCityRequiredMessage_countryId}" converter="countryConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{countryController.items}"
+                               var="countryIdItem"
+                               itemValue="#{countryIdItem}"
+                               itemLabel="#{countryIdItem.country.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:edit>
+
+
+    </ui:composition>
+
+</html>

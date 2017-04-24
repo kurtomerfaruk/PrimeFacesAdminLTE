@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="StoreViewForm"
+                   renderedListener="#{storeController.selected != null}"
+                   widgetVar="StoreViewDialog">
+
+            <h:outputText value="#{messages.ViewStoreLabel_storeId}"/>
+            <h:outputText value="#{storeController.selected.storeId}" title="#{messages.ViewStoreTitle_storeId}"/>
+
+            <h:outputText value="#{messages.ViewStoreLabel_lastUpdate}"/>
+            <h:outputText value="#{storeController.selected.lastUpdate}" title="#{messages.ViewStoreTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewStoreLabel_managerStaffId}"/>
+            <h:outputText value="#{storeController.selected.managerStaffId.firstName}"/>
+
+            <h:outputText value="#{messages.ViewStoreLabel_addressId}"/>
+            <h:outputText value="#{storeController.selected.addressId.addressId}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

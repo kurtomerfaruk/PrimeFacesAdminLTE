@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="FilmActorViewForm"
+                   renderedListener="#{filmActorController.selected !=null}"
+                   widgetVar="FilmActorViewDialog">
+
+            <h:outputText value="#{messages.ViewFilmActorLabel_filmActorPK_actorId}"/>
+            <h:outputText value="#{filmActorController.selected.filmActorId}" title="#{messages.ViewFilmActorTitle_filmActorPK_actorId}"/>
+
+            <h:outputText value="#{messages.ViewFilmActorLabel_lastUpdate}"/>
+            <h:outputText value="#{filmActorController.selected.lastUpdate}" title="#{messages.ViewFilmActorTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewFilmActorLabel_film}"/>
+            <h:outputText value="#{filmActorController.selected.film.description}"/>
+
+            <h:outputText value="#{messages.ViewFilmActorLabel_actor}"/>
+            <h:outputText value="#{filmActorController.selected.actor.firstName}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

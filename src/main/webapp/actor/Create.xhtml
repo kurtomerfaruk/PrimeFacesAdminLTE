@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="ActorCreateForm"
+                     renderedListener="#{actorController.selected != null}"
+                     widgetVar="ActorCreateDialog"
+                     actionListener="#{actorController.saveNew}"
+                     listForm="ActorListForm">
+
+            <p:outputLabel value="#{messages.CreateActorLabel_firstName}" for="firstName" />
+            <p:inputText id="firstName" value="#{actorController.selected.firstName}" title="#{messages.CreateActorTitle_firstName}" required="true" requiredMessage="#{messages.CreateActorRequiredMessage_firstName}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.CreateActorLabel_lastName}" for="lastName" />
+            <p:inputText id="lastName" value="#{actorController.selected.lastName}" title="#{messages.CreateActorTitle_lastName}" required="true" requiredMessage="#{messages.CreateActorRequiredMessage_lastName}" size="45" maxlength="45"/>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

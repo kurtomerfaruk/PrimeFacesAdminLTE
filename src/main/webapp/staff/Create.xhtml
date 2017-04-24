@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+
+        <coco:create id="StaffCreateForm"
+                     renderedListener="#{staffController.selected != null}"
+                     widgetVar="StaffCreateDialog"
+                     actionListener="#{staffController.saveNew}"
+                     listForm="StaffListForm">
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_firstName}" for="firstName" />
+            <p:inputText id="firstName" value="#{staffController.selected.firstName}" title="#{messages.CreateStaffTitle_firstName}" required="true" requiredMessage="#{messages.CreateStaffRequiredMessage_firstName}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_lastName}" for="lastName" />
+            <p:inputText id="lastName" value="#{staffController.selected.lastName}" title="#{messages.CreateStaffTitle_lastName}" required="true" requiredMessage="#{messages.CreateStaffRequiredMessage_lastName}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_picture}" for="picture" />
+            <p:inputTextarea rows="4" autoResize="false" class="full-width" id="picture" value="#{staffController.selected.picture}" title="#{messages.CreateStaffTitle_picture}" />
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_email}" for="email" />
+            <p:inputText id="email" value="#{staffController.selected.email}" title="#{messages.CreateStaffTitle_email}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_active}" for="active" />
+            <p:selectBooleanCheckbox id="active" value="#{staffController.selected.active}" required="true" requiredMessage="#{messages.CreateStaffRequiredMessage_active}"/>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_username}" for="username" />
+            <p:inputText id="username" value="#{staffController.selected.username}" title="#{messages.CreateStaffTitle_username}" required="true" requiredMessage="#{messages.CreateStaffRequiredMessage_username}" size="16" maxlength="16"/>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_store}" for="store" />
+            <p:selectOneMenu id="store" value="#{staffController.selected.store}"  converter="storeConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{storeController.items}"
+                               var="storeItem"
+                               itemValue="#{storeItem}"
+                               itemLabel="#{storeItem.storeId.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_storeId}" for="storeId" />
+            <p:selectOneMenu id="storeId" value="#{staffController.selected.storeId}" required="true" requiredMessage="#{messages.CreateStaffRequiredMessage_storeId}" converter="storeConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{storeController.items}"
+                               var="storeIdItem"
+                               itemValue="#{storeIdItem}"
+                               itemLabel="#{storeIdItem.storeId.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateStaffLabel_addressId}" for="addressId" />
+            <p:selectOneMenu id="addressId" value="#{staffController.selected.addressId}" filter="true" required="true" requiredMessage="#{messages.CreateStaffRequiredMessage_addressId}" converter="addressConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{addressController.items}"
+                               var="addressIdItem"
+                               itemValue="#{addressIdItem}"
+                               itemLabel="#{addressIdItem.address.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

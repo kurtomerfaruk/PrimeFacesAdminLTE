@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="StaffViewForm"
+                   widgetVar="StaffViewDialog"
+                   renderedListener="#{staffController.selected != null}">
+
+            <h:outputText value="#{messages.ViewStaffLabel_staffId}"/>
+            <h:outputText value="#{staffController.selected.staffId}" title="#{messages.ViewStaffTitle_staffId}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_firstName}"/>
+            <h:outputText value="#{staffController.selected.firstName}" title="#{messages.ViewStaffTitle_firstName}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_lastName}"/>
+            <h:outputText value="#{staffController.selected.lastName}" title="#{messages.ViewStaffTitle_lastName}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_picture}"/>
+            <h:outputText value="#{staffController.selected.picture}" title="#{messages.ViewStaffTitle_picture}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_email}"/>
+            <h:outputText value="#{staffController.selected.email}" title="#{messages.ViewStaffTitle_email}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_active}"/>
+            <h:selectBooleanCheckbox id="active" value="#{staffController.selected.active}" title="#{messages.EditStaffTitle_active}" required="true" requiredMessage="#{messages.EditStaffRequiredMessage_active}" disabled="true"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_username}"/>
+            <h:outputText value="#{staffController.selected.username}" title="#{messages.ViewStaffTitle_username}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_lastUpdate}"/>
+            <h:outputText value="#{staffController.selected.lastUpdate}" title="#{messages.ViewStaffTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewStaffLabel_store}"/>
+            <h:outputText value="#{staffController.selected.store.storeId}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_storeId}"/>
+            <h:outputText value="#{staffController.selected.storeId.storeId}"/>
+
+            <h:outputText value="#{messages.ViewStaffLabel_addressId}"/>
+            <h:outputText value="#{staffController.selected.addressId.address}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

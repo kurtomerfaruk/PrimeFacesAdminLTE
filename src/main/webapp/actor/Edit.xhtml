@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="ActorEditForm"
+                   renderedListener="#{actorController.selected != null}"
+                   widgetVar="ActorEditDialog"
+                   actionListener="#{actorController.save}"
+                   listForm="ActorListForm">
+
+
+            <h:outputLabel value="#{messages.EditActorLabel_actorId}" for="actorId" />
+            <h:outputText id="actorId" value="#{actorController.selected.actorId}" />
+
+            <p:outputLabel value="#{messages.EditActorLabel_firstName}" for="firstName" />
+            <p:inputText id="firstName" value="#{actorController.selected.firstName}" title="#{messages.EditActorTitle_firstName}" required="true" requiredMessage="#{messages.EditActorRequiredMessage_firstName}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.EditActorLabel_lastName}" for="lastName" />
+            <p:inputText id="lastName" value="#{actorController.selected.lastName}" title="#{messages.EditActorTitle_lastName}" required="true" requiredMessage="#{messages.EditActorRequiredMessage_lastName}" size="45" maxlength="45"/>
+
+        </coco:edit>
+
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="AuditViewForm"
+                   widgetVar="AuditViewDialog"
+                   renderedListener="#{auditController.selected != null}">
+
+            <h:outputText value="#{messages.ViewAuditLabel_auditId}"/>
+            <h:outputText value="#{auditController.selected.auditId}" title="#{messages.ViewAuditTitle_auditId}"/>
+
+            <h:outputText value="#{messages.ViewAuditLabel_audit}"/>
+            <h:outputText value="#{auditController.selected.audit}" title="#{messages.ViewAuditTitle_audit}"/>
+
+            <h:outputText value="#{messages.ViewAuditLabel_lastUpdate}"/>
+            <h:outputText value="#{auditController.selected.lastUpdate}" title="#{messages.ViewAuditTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewAuditLabel_countryId}"/>
+            <h:outputText value="#{auditController.selected.countryId.country}"/>
+
+        </coco:view>
+
+
+    </ui:composition>
+
+</html>

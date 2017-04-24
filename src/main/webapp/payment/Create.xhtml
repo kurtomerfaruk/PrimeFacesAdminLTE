@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="PaymentCreateForm"
+                     renderedListener="#{paymentController.selected != null}"
+                     widgetVar="PaymentCreateDialog"
+                     actionListener="#{paymentController.saveNew}"
+                     listForm="PaymentListForm">
+
+            <p:outputLabel value="#{messages.CreatePaymentLabel_amount}" for="amount" />
+            <p:inputText id="amount" value="#{paymentController.selected.amount}" title="#{messages.CreatePaymentTitle_amount}" required="true" requiredMessage="#{messages.CreatePaymentRequiredMessage_amount}"/>
+
+            <p:outputLabel value="#{messages.CreatePaymentLabel_paymentDate}" for="paymentDate" />
+            <p:calendar id="paymentDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{paymentController.selected.paymentDate}" title="#{messages.CreatePaymentTitle_paymentDate}" required="true" requiredMessage="#{messages.CreatePaymentRequiredMessage_paymentDate}" showOn="button"/>
+
+            <p:outputLabel value="#{messages.CreatePaymentLabel_staffId}" for="staffId" />
+            <p:selectOneMenu id="staffId" value="#{paymentController.selected.staffId}" required="true" requiredMessage="#{messages.CreatePaymentRequiredMessage_staffId}" converter="staffConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{staffController.items}"
+                               var="staffIdItem"
+                               itemValue="#{staffIdItem}"
+                               itemLabel="#{staffIdItem.firstName.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePaymentLabel_rentalId}" for="rentalId" />
+            <p:selectOneMenu id="rentalId" value="#{paymentController.selected.rentalId}"  converter="rentalConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{rentalController.items}"
+                               var="rentalIdItem"
+                               itemValue="#{rentalIdItem}"
+                               itemLabel="#{rentalIdItem.rentalId.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreatePaymentLabel_customerId}" for="customerId" />
+            <p:selectOneMenu id="customerId" value="#{paymentController.selected.customerId}" required="true" requiredMessage="#{messages.CreatePaymentRequiredMessage_customerId}" converter="customerConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{customerController.items}"
+                               var="customerIdItem"
+                               itemValue="#{customerIdItem}"
+                               itemLabel="#{customerIdItem.firstName.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="FilmActorListForm" class="form-height">
+
+        <p:contextMenu id="FilmActorDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('FilmActorListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('FilmActorListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('FilmActorListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('FilmActorListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.FilmActorMenuItem_film}" icon="ui-icon-search"  actionListener="#{filmActorController.prepareFilm}" update=":FilmViewForm:FilmViewForm" oncomplete="PF('FilmViewDialog').show()" disabled="#{empty filmActorController.selected.film}"/>  
+            <p:menuitem value="#{messages.FilmActorMenuItem_actor}" icon="ui-icon-search"  actionListener="#{filmActorController.prepareActor}" update=":ActorViewForm:ActorViewForm" oncomplete="PF('ActorViewDialog').show()" disabled="#{empty filmActorController.selected.actor}"/>  
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{filmActorController.lazyList}"
+                        rowKey="#{item.filmActorId}"
+                        selection="#{filmActorController.selected}"
+                        filtered="#{filmActorController.filtered}"
+                        rowselect=":FilmActorListForm:datalist:datalist:createButton,:FilmActorListForm:datalist:datalist:viewButton,:FilmActorListForm:datalist:datalist:editButton,:FilmActorListForm:datalist:datalist:deleteButton,:FilmActorListForm:FilmActorDataTableContextMenu"
+                        rowDblselect="document.getElementById('FilmActorListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":FilmActorListForm:datalist:datalist:createButton :FilmActorListForm:datalist:datalist:viewButton :FilmActorListForm:datalist:datalist:editButton :FilmActorListForm:datalist:datalist:deleteButton"
+                        selectListener="#{filmActorController.resetParents()}">
+
+            <p:ajax event="colResize" listener="#{filmActorController.onResize}"/>
+
+            <f:facet name="header">
+                <div class="row row-nomargin">
+                    <div class="col-lg-3">
+                        <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{messages.enterKeyword}"/>
+                    </div>
+                    <div class="col-lg-6">
+                        <h:outputText value="#{messages.ListFilmActorTitle}"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="pull-right">
+                            <p:columnToggler datasource="datalist" trigger="toggler" >
+                                <p:ajax event="toggle" listener="#{filmActorController.onToggle}" />
+                            </p:columnToggler>
+                            <p:commandButton id="toggler" type="button" value="#{messages.Columns}" class="btn-primary" icon="fa fa-list"/>
+                            <p:commandButton value="#{messages.Save}" actionListener="#{filmActorController.columnSave()}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:columns value="#{filmActorController.columns}" var="column" columnIndexVar="colIndex" sortBy="#{item[column.property]}" filterBy="#{item[column.property]}" visible="#{filmActorController.listVisible[colIndex]}" exportable="#{filmActorController.listVisible[colIndex]}" width="#{filmActorController.listWidth[colIndex]}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}" />
+                </f:facet>
+
+                <h:outputText value="#{item[column.property]}" rendered="#{column.date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                
+                <h:outputText value="#{item[column.property]}" rendered="#{!column.date}"/>
+
+            </p:columns>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{messages.Create}" actionListener="#{filmActorController.prepareCreate}" update=":FilmActorCreateForm:FilmActorCreateForm" oncomplete="PF('FilmActorCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{messages.View}" update=":FilmActorViewForm:FilmActorViewForm" oncomplete="PF('FilmActorViewDialog').show()" disabled="#{empty filmActorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{messages.Edit}" update=":FilmActorEditForm:FilmActorEditForm" oncomplete="PF('FilmActorEditDialog').show()" disabled="#{empty filmActorController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{filmActorController.delete}" update=":growl,datalist" disabled="#{empty filmActorController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

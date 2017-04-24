@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+    <h:head><title>Jsoup-GeoChart</title> 
+        <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+        <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+        <script type='text/javascript'>
+            var chart;
+            var opts;
+            var data;
+
+            google.load('visualization', '1.1', {'packages': ['geochart']});
+            google.setOnLoadCallback(drawRegionsMap);
+
+            function drawRegionsMap() {
+                data = google.visualization.arrayToDataTable([
+                        ['City', 'Population'],
+                        <c:forEach var = "resultAnalysis" items = "${mapBean.mapList}" >
+                        ['${resultAnalysis.country}',${resultAnalysis.count}],
+                        </c:forEach> 
+                ]);
+
+                chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+                drawChart();
+            }
+            ;
+
+            function drawChart() {
+                var windowW = $(window).width();
+                var windowH = $(window).height();
+                windowW -=50;
+                
+                        opts = {
+                            region: 'TR',
+                            displayMode: 'regions',
+                            resolution: 'provinces',
+                            width : windowW,
+                            height : windowH
+                        };
+                chart.draw(data, opts);
+            }
+
+            $(document).ready(function () {
+                $(window).resize(function () {
+                    drawChart();
+                });
+            });
+
+        </script> 
+       
+    </h:head> 
+    <h:body> 
+        <div id="chart_div"></div>
+    </h:body> 
+</html> 

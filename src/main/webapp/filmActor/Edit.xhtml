@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="FilmActorEditForm"
+                   actionListener="#{filmActorController.save}"
+                   listForm="FilmActorListForm"
+                   renderedListener="#{filmActorController.selected!=null}"
+                   widgetVar="FilmActorEditDialog">
+
+            <h:outputLabel value="#{messages.EditFilmActorLabel_filmActorPK_actorId}" for="filmActorPK_actorId" />
+            <h:outputText id="filmActorPK_actorId" value="#{filmActorController.selected.filmActorId}" />
+
+            
+            <h:outputLabel value="#{messages.EditFilmActorLabel_film}" for="film" />
+            <h:outputText id="film" value="#{filmActorController.selected.film}" />
+
+
+            <h:outputLabel value="#{messages.EditFilmActorLabel_actor}" for="actor" />
+            <h:outputText id="actor" value="#{filmActorController.selected.actor}" />
+
+        </coco:edit>
+
+    </ui:composition>
+
+</html>

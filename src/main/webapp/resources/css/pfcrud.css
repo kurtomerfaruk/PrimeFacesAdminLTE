@@ -1,0 +1,143 @@
+.ui-widget {
+    font-size: 12px !important;
+}
+.ui-layout-north {
+    z-index:20 !important;
+    overflow:visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+}
+.ui-widget-header {
+    text-align: center;
+}
+.ui-datatable .ui-datatable-footer .footer-section {
+    text-align: left;
+}
+
+.ui-column-filter{
+    width: 95% !important;
+}
+
+.column {
+    font-weight: bold;
+    background-color: menu;
+}
+
+.form-height{
+    position: relative;
+    width: 100%;
+}
+
+.full-width{
+    width: 100% !important;
+}
+
+.footer{
+    margin: 5px !important;
+}
+
+.footer-left{
+    float: left;
+}
+
+.footer-right{
+    float: right;
+}
+
+.ui-panelgrid .ui-panelgrid-cell{
+    padding: 2px 5px !important;
+}
+
+.ui-dialog.ui-widget-content .ui-dialog-titlebar{
+    padding: 0px 15px !important;
+}
+
+.ui-selectonemenu{
+    width: 100% !important;
+}
+
+.ui-selectonemenu-label{
+    width: 100% !important;
+}
+
+div.ui-selectonemenu-filter-container{
+    width: 100% !important;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-filter {
+    width: 100% !important;
+    padding-right: 4px !important;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger{
+    width: 23px !important;
+}
+
+.ui-picklist .ui-picklist-list {
+    height: 100px !important;
+}
+
+.ui-picklist-list-wrapper{
+    height: 100px !important;
+}
+
+.ui-picklist-buttons{
+    height: 100px !important;
+}
+
+.datatable-no-border.ui-panelgrid>*>tr,
+.datatable-no-border.ui-panelgrid .ui-panelgrid-cell {
+    border: none !important;
+}
+
+.ui-button{
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: 1.42857143 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    -ms-touch-action: manipulation !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    border-radius: 4px !important;
+    padding: 3px !important;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+/*.ui-inputfield.ui-state-error{
+    border:1px solid #d9534f !important;
+}*/
+
+.select-one-menu-width{
+    min-width: 300px !important;
+}
+
+.font-normal{
+    font-weight: normal !important;
+    height: 12px !important;
+}
+
+.ui-chkbox-box.ui-state-active .ui-icon, .ui-radiobutton-box.ui-state-active .ui-icon{
+    margin-top: -2px !important;
+    margin-left: -1px !important;
+}
+
+.ui-button, .ui-button span, button.ui-button.ui-state-default span, .ui-button.ui-state-default span{
+    font-weight: normal !important;
+}
+
+.ui-button-icon-only .ui-icon.fa, .ui-button-text-icon-left .ui-icon.fa, .ui-button-text-icon-right .ui-icon.fa{
+    margin-top: -6px !important;
+}

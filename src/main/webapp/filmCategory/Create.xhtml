@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="FilmCategoryCreateForm"
+                     actionListener="#{filmCategoryController.saveNew}"
+                     listForm="FilmCategoryListForm"
+                     renderedListener="#{filmCategoryController.selected!=null}"
+                     widgetVar="FilmCategoryCreateDialog">
+
+            <p:outputLabel value="#{messages.CreateFilmCategoryLabel_film}" for="film" />
+            <p:selectOneMenu id="film" value="#{filmCategoryController.selected.film}" required="true" class="select-one-menu-width" filter="true" requiredMessage="#{messages.CreateFilmCategoryRequiredMessage_film}" converter="filmConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{filmController.items}"
+                               var="filmItem"
+                               itemValue="#{filmItem}"
+                               itemLabel="#{filmItem.description.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateFilmCategoryLabel_category}" for="category" />
+            <p:selectOneMenu id="category" value="#{filmCategoryController.selected.category}" required="true" class="select-one-menu-width" filter="true" requiredMessage="#{messages.CreateFilmCategoryRequiredMessage_category}" converter="categoryConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{categoryController.items}"
+                               var="categoryItem"
+                               itemValue="#{categoryItem}"
+                               itemLabel="#{categoryItem.name.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

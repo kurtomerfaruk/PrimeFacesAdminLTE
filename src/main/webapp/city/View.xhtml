@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="CityViewForm"
+                   widgetVar="CityViewDialog"
+                   renderedListener="#{cityController.selected != null}">
+
+            <h:outputText value="#{messages.ViewCityLabel_cityId}"/>
+            <h:outputText value="#{cityController.selected.cityId}" title="#{messages.ViewCityTitle_cityId}"/>
+
+            <h:outputText value="#{messages.ViewCityLabel_city}"/>
+            <h:outputText value="#{cityController.selected.city}" title="#{messages.ViewCityTitle_city}"/>
+
+            <h:outputText value="#{messages.ViewCityLabel_lastUpdate}"/>
+            <h:outputText value="#{cityController.selected.lastUpdate}" title="#{messages.ViewCityTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewCityLabel_countryId}"/>
+            <h:outputText value="#{cityController.selected.countryId.country}"/>
+
+        </coco:view>
+
+
+    </ui:composition>
+
+</html>

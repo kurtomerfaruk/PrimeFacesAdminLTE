@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="InventoryCreateForm"
+                     renderedListener="#{inventoryController.selected != null}"
+                     widgetVar="InventoryCreateDialog"
+                     actionListener="#{inventoryController.saveNew}"
+                     listForm="InventoryListForm">
+
+            <p:outputLabel value="#{messages.CreateInventoryLabel_storeId}" for="storeId" />
+            <p:selectOneMenu id="storeId" value="#{inventoryController.selected.storeId}" required="true" requiredMessage="#{messages.CreateInventoryRequiredMessage_storeId}" converter="storeConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{storeController.items}"
+                               var="storeIdItem"
+                               itemValue="#{storeIdItem}"
+                               itemLabel="#{storeIdItem.storeId.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.CreateInventoryLabel_filmId}" for="filmId" />
+            <p:selectOneMenu id="filmId" value="#{inventoryController.selected.filmId}" required="true" requiredMessage="#{messages.CreateInventoryRequiredMessage_filmId}" converter="filmConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{filmController.items}"
+                               var="filmIdItem"
+                               itemValue="#{filmIdItem}"
+                               itemLabel="#{filmIdItem.description.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

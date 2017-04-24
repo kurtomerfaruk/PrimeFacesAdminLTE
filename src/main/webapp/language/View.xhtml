@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="LanguageViewForm"
+                   widgetVar="LanguageViewDialog"
+                   renderedListener="#{languageController.selected != null}">
+
+            <h:outputText value="#{messages.ViewLanguageLabel_languageId}"/>
+            <h:outputText value="#{languageController.selected.languageId}" title="#{messages.ViewLanguageTitle_languageId}"/>
+
+            <h:outputText value="#{messages.ViewLanguageLabel_name}"/>
+            <h:outputText value="#{languageController.selected.name}" title="#{messages.ViewLanguageTitle_name}"/>
+
+            <h:outputText value="#{messages.ViewLanguageLabel_lastUpdate}"/>
+            <h:outputText value="#{languageController.selected.lastUpdate}" title="#{messages.ViewLanguageTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

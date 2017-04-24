@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="FilmTextEditForm"
+                   renderedListener="#{filmTextController.selected != null}"
+                   widgetVar="FilmTextEditDialog"
+                   actionListener="#{filmTextController.save}"
+                   listForm="FilmTextListForm">
+
+            <h:outputLabel value="#{messages.EditFilmTextLabel_filmId}" for="filmId" />
+            <h:outputText id="filmId" value="#{filmTextController.selected.filmId}" />
+
+            <p:outputLabel value="#{messages.EditFilmTextLabel_title}" for="title" />
+            <p:inputText id="title" value="#{filmTextController.selected.title}" title="#{messages.EditFilmTextTitle_title}" required="true" requiredMessage="#{messages.EditFilmTextRequiredMessage_title}" size="255" maxlength="255"/>
+
+            <p:outputLabel value="#{messages.EditFilmTextLabel_description}" for="description" />
+            <p:inputTextarea rows="4" autoResize="false" class="full-width" id="description" value="#{filmTextController.selected.description}" title="#{messages.EditFilmTextTitle_description}" />
+
+        </coco:edit>
+
+    </ui:composition>
+
+</html>

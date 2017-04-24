@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="RentalEditForm"
+                   renderedListener="#{rentalController.selected != null}"
+                   widgetVar="RentalEditDialog"
+                   actionListener="#{rentalController.save}"
+                   listForm="RentalListForm">
+
+            <h:outputLabel value="#{messages.EditRentalLabel_rentalId}" for="rentalId" />
+            <h:outputText id="rentalId" value="#{rentalController.selected.rentalId}" />
+
+            <p:outputLabel value="#{messages.EditRentalLabel_rentalDate}" for="rentalDate" />
+            <p:calendar id="rentalDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{rentalController.selected.rentalDate}" title="#{messages.EditRentalTitle_rentalDate}" required="true" requiredMessage="#{messages.EditRentalRequiredMessage_rentalDate}" showOn="button"/>
+
+            <p:outputLabel value="#{messages.EditRentalLabel_returnDate}" for="returnDate" />
+            <p:calendar id="returnDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{rentalController.selected.returnDate}" title="#{messages.EditRentalTitle_returnDate}"  showOn="button"/>
+
+            <p:outputLabel value="#{messages.EditRentalLabel_staffId}" for="staffId" />
+            <p:selectOneMenu id="staffId" value="#{rentalController.selected.staffId}" required="true" requiredMessage="#{messages.EditRentalRequiredMessage_staffId}" converter="staffConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{staffController.items}"
+                               var="staffIdItem"
+                               itemValue="#{staffIdItem}"
+                               itemLabel="#{staffIdItem.firstName.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.EditRentalLabel_inventoryId}" for="inventoryId" />
+            <p:selectOneMenu id="inventoryId" value="#{rentalController.selected.inventoryId}" required="true" requiredMessage="#{messages.EditRentalRequiredMessage_inventoryId}" converter="inventoryConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{inventoryController.items}"
+                               var="inventoryIdItem"
+                               itemValue="#{inventoryIdItem}"
+                               itemLabel="#{inventoryIdItem.inventoryId.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="#{messages.EditRentalLabel_customerId}" for="customerId" />
+            <p:selectOneMenu id="customerId" value="#{rentalController.selected.customerId}" required="true" requiredMessage="#{messages.EditRentalRequiredMessage_customerId}" converter="customerConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{customerController.items}"
+                               var="customerIdItem"
+                               itemValue="#{customerIdItem}"
+                               itemLabel="#{customerIdItem.firstName.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:edit>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="FilmTextCreateForm"
+                     renderedListener="#{filmTextController.selected != null}"
+                     widgetVar="FilmTextCreateDialog"
+                     actionListener="#{filmTextController.saveNew}"
+                     listForm="FilmTextListForm">
+
+            <p:outputLabel value="#{messages.CreateFilmTextLabel_title}" for="title" />
+            <p:inputText id="title" value="#{filmTextController.selected.title}" title="#{messages.CreateFilmTextTitle_title}" required="true" requiredMessage="#{messages.CreateFilmTextRequiredMessage_title}" size="40" maxlength="255"/>
+
+            <p:outputLabel value="#{messages.CreateFilmTextLabel_description}" for="description" />
+            <p:inputTextarea rows="4" autoResize="false" class="full-width" id="description" value="#{filmTextController.selected.description}" title="#{messages.CreateFilmTextTitle_description}" />
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

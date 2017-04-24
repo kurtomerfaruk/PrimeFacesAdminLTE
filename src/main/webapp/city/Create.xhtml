@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:create id="CityCreateForm"
+                     renderedListener="#{cityController.selected != null}"
+                     widgetVar="CityCreateDialog"
+                     actionListener="#{cityController.saveNew}"
+                     listForm="CityListForm">
+
+            <p:outputLabel value="#{messages.CreateCityLabel_city}" for="city" />
+            <p:inputText id="city" value="#{cityController.selected.city}" title="#{messages.CreateCityTitle_city}" required="true" requiredMessage="#{messages.CreateCityRequiredMessage_city}" size="50" maxlength="50"/>
+
+            <p:outputLabel value="#{messages.CreateCityLabel_countryId}" for="countryId" />
+            <p:selectOneMenu id="countryId" value="#{cityController.selected.countryId}" required="true" filter="true" requiredMessage="#{messages.CreateCityRequiredMessage_countryId}" converter="countryConverter">
+                <f:selectItem itemLabel="#{messages.SelectOneMessage}"/>
+                <f:selectItems value="#{countryController.items}"
+                               var="countryIdItem"
+                               itemValue="#{countryIdItem}"
+                               itemLabel="#{countryIdItem.country.toString()}"
+                               />
+
+            </p:selectOneMenu>
+
+        </coco:create>
+
+    </ui:composition>
+
+</html>

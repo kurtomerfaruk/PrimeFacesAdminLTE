@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="FilmCategoryViewForm"
+                   renderedListener="#{filmCategoryController.selected!=null}"
+                   widgetVar="FilmCategoryViewDialog">
+
+            <h:outputText value="#{messages.id}"/>
+            <h:outputText value="#{filmCategoryController.selected.filmCategoryId}" title="#{messages.id}"/>
+
+            <h:outputText value="#{messages.ViewFilmCategoryLabel_lastUpdate}"/>
+            <h:outputText value="#{filmCategoryController.selected.lastUpdate}" title="#{messages.ViewFilmCategoryTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.ViewFilmCategoryLabel_film}"/>
+            <h:outputText value="#{filmCategoryController.selected.film.description}"/>
+
+            <h:outputText value="#{messages.ViewFilmCategoryLabel_category}"/>
+            <h:outputText value="#{filmCategoryController.selected.category.name}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

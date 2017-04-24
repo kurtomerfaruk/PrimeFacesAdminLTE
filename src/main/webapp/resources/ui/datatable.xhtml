@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <composite:interface>
+        <composite:attribute name="id" />
+        <composite:attribute name="value" />
+        <composite:attribute name="rowKey" />
+        <composite:attribute name="selection" />
+        <composite:attribute name="paginatorPosition" default="bottom"/>
+        <composite:attribute name="rowselect"/>
+        <composite:attribute name="contextMenu"/>
+        <composite:attribute name="rowDblselect"/>
+        <composite:attribute name="rowStyleClass" required="false"/>
+        <composite:attribute name="filtered"/>
+        <composite:attribute name="lazy" default="true"/>
+        <composite:attribute name="selectListener" method-signature="void listener()"/>
+        <composite:facet name="footer"/>
+        <composite:clientBehavior name="colResize" targets="#{cc.attrs.id}" event="colResize"/>
+    </composite:interface>
+
+
+    <composite:implementation>
+        <script type="text/javascript">
+            $(function () {
+                var windowH = $(window).height();
+                windowH -= 130;
+                $('.form-height').css({'height': windowH + 'px'});
+
+                $(window).resize(function () {
+                    var windowH = $(window).height();
+                    windowH -= 130;
+                    $('.form-height').css({'height': windowH + 'px'});
+                })
+            });
+
+        </script>
+        <p:dataTable id="#{cc.attrs.id}"
+                     value="#{cc.attrs.value}"
+                     var="item"
+                     rowKey="#{cc.attrs.rowKey}"
+                     paginator="true"
+                     rows="50"
+                     rowsPerPageTemplate="50,100,200"
+                     selectionMode="single"
+                     selection="#{cc.attrs.selection}"
+                     paginatorPosition="#{cc.attrs.paginatorPosition}"
+                     lazy="#{cc.attrs.lazy}"
+                     widgetVar="datalistWidget"
+                     scrollable="true"
+                     scrollHeight="100%"
+                     scrollWidth="auto"
+                     resizableColumns="true"
+                     liveResize="true"
+                     pageLinks="1"
+                     reflow="true"
+                     rowStyleClass="#{cc.attrs.rowStyleClass}"
+                     filteredValue="#{cc.attrs.filtered}"
+                     paginatorTemplate="{buttons} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                     currentPageReportTemplate="#{messages.currentPageTemplate}">
+
+            <p:ajax event="rowSelect" update="#{cc.attrs.rowselect}" listener="#{cc.attrs.selectListener}"/>
+            <p:ajax event="contextMenu" update="#{cc.attrs.contextMenu}" listener="#{cc.attrs.selectListener}"/>
+            <p:ajax event="rowDblselect" onsuccess="#{cc.attrs.rowDblselect}"/>
+
+            <f:facet name="{Exporters}">
+
+                <div class="footer-right">
+                    <h:commandLink>
+                        <p:graphicImage name="images/excel.png" width="24"/>
+                        <p:dataExporter type="xls" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="images/pdf.png" width="24"/>
+                        <p:dataExporter type="pdf" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="images/csv.png" width="24"/>
+                        <p:dataExporter type="csv" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage name="images/xml.png" width="24"/>
+                        <p:dataExporter type="xml" target="datalist" fileName="DataExport" encoding="CP1254"/>
+                    </h:commandLink>
+                </div>
+
+            </f:facet>
+
+            
+            <composite:insertChildren/>
+            <composite:insertFacet name="{buttons}"/>
+            <composite:insertFacet name="header"/>
+            <composite:insertFacet name="filter"/>
+            <!-- Sayfalarında kullanacağın datatable tanımın... -->
+        </p:dataTable>
+    </composite:implementation>
+</html>

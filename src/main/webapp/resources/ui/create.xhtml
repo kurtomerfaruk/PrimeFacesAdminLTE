@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <composite:interface>
+        <composite:attribute name="id" />
+        <composite:attribute name="widgetVar" />
+        <composite:attribute name="renderedListener"/>
+        <composite:attribute name="actionListener" method-signature="void actionListener(javax.faces.event.ActionEvent)" required="true"/>
+        <composite:attribute name="listForm"/>
+        <composite:attribute name="columns" default="2"/>
+        <composite:attribute name="focus"/>
+    </composite:interface>
+
+
+    <composite:implementation>
+        <p:dialog widgetVar="#{cc.attrs.widgetVar}" 
+                  modal="true" 
+                  resizable="false" 
+                  closeOnEscape="true" 
+                  header="#{messages.New}"
+                  appendTo="@(body)"
+                  focus="#{cc.attrs.focus}"
+                  styleClass="box box-primary">
+
+            <h:form id="#{cc.id}">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="#{cc.attrs.columns}" columnClasses="column" rendered="#{cc.attrs.renderedListener}">
+                        <composite:insertChildren/>
+                        <f:facet name="footer">
+                            <div class="footer-right footer">
+                                <p:commandButton icon="fa fa-check-square-o fa-lg" styleClass="btn-success" actionListener="#{cc.attrs.actionListener}" value="#{messages.Save}" update="display,:#{cc.attrs.listForm}:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('#{cc.attrs.widgetVar}'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                                <p:commandButton icon="fa fa-close fa-lg" styleClass="btn-danger" value="#{messages.Cancel}" onclick="PF('#{cc.attrs.widgetVar}').hide()" immediate="true" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>            
+                            </div>
+                        </f:facet>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+
+        </p:dialog>
+    </composite:implementation>
+</html>

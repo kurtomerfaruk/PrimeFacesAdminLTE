@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title><ui:insert name="title">PrimeFaces+Admin LTE</ui:insert></title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+        <!-- Bootstrap 3.3.5 -->
+        <h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="font-awesome.min.css"/>
+        <h:outputStylesheet library="css" name="ionicons.min.css"/>
+        <h:outputStylesheet library="dist" name="css/AdminLTE.min.css"/>
+        <h:outputStylesheet library="plugins" name="iCheck/square/blue.css"/>
+        <style type="text/css">
+            div[id="growlLogin_container"] {
+                top: 60px;
+                z-index:1001; 
+            }
+            div[id="growlLogin_container"] {
+                position:absolute;
+                top:60px;
+                z-index:1001;
+            }
+        </style>
+    </h:head>
+
+    <h:body class="hold-transition login-page">
+        <h:form>
+            <p:growl id="growlLogin" life="3000"/>
+            <div class="login-box">
+                <div class="login-logo">
+                    <b>PrimeFaces+Admin</b>LTE
+                </div><!-- /.login-logo -->
+                <div class="login-box-body">
+                    <p class="login-box-msg">Sign in to start your session</p>
+
+                    <div class="form-group has-feedback">
+                        <p:inputText id="txtUserName" class="form-control" label="User name" value="#{loginController.username}" required="true">
+                            <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                        </p:inputText>
+                        <p:watermark value="#{messages.usernameText}" for="txtUserName"/>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <p:password id="txtPassword" class="form-control" label="Password" value="#{loginController.password}" required="true">
+                            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </p:password>
+                        <p:watermark for="txtPassword" value="#{messages.passwordText}"/>
+                    </div>
+                    <div class="form-group">
+                        <p:captcha id="captcha" label="captcha" requiredMessage="Captcha is required"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p:commandButton ajax="false" value="#{messages.loginText}" action="#{loginController.login}" update="growlLogin" class="btn btn-primary btn-lg btn-block btn-flat" icon="fa fa-user"/>
+                        </div><!-- /.col -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            #{messages.usernameText} : Mike
+                            #{messages.passwordText} : Mike
+                        </div>
+                    </div>
+
+                </div><!-- /.login-box-body -->
+            </div><!-- /.login-box -->
+        </h:form>
+        <h:outputScript library="bootstrap" name="js/bootstrap.min.js"/>
+        <h:outputScript library="plugins" name="iCheck/icheck.min.js"/>
+        <h:outputScript name="jquery/jquery.js" library="primefaces" />
+        <script>
+            $(function () {
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%' // optional
+                });
+            });
+        </script>
+
+    </h:body>
+
+</html>

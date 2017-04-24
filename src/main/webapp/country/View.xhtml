@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:view id="CountryViewForm"
+                   widgetVar="CountryViewDialog"
+                   renderedListener="#{countryController.selected != null}">
+
+            <h:outputText value="#{messages.ViewCountryLabel_countryId}"/>
+            <h:outputText value="#{countryController.selected.countryId}" title="#{messages.ViewCountryTitle_countryId}"/>
+
+            <h:outputText value="#{messages.ViewCountryLabel_country}"/>
+            <h:outputText value="#{countryController.selected.country}" title="#{messages.ViewCountryTitle_country}"/>
+
+            <h:outputText value="#{messages.ViewCountryLabel_lastUpdate}"/>
+            <h:outputText value="#{countryController.selected.lastUpdate}" title="#{messages.ViewCountryTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+        </coco:view>
+
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+
+        <coco:view id="AddressViewForm"
+                   widgetVar="AddressViewDialog"
+                   renderedListener="#{addressController.selected != null}">
+
+            <h:outputText value="#{messages.ViewAddressLabel_addressId}"/>
+            <h:outputText value="#{addressController.selected.addressId}" title="#{messages.ViewAddressTitle_addressId}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_address}"/>
+            <h:outputText value="#{addressController.selected.address}" title="#{messages.ViewAddressTitle_address}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_address2}"/>
+            <h:outputText value="#{addressController.selected.address2}" title="#{messages.ViewAddressTitle_address2}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_district}"/>
+            <h:outputText value="#{addressController.selected.district}" title="#{messages.ViewAddressTitle_district}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_postalCode}"/>
+            <h:outputText value="#{addressController.selected.postalCode}" title="#{messages.ViewAddressTitle_postalCode}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_phone}"/>
+            <h:outputText value="#{addressController.selected.phone}" title="#{messages.ViewAddressTitle_phone}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_location}"/>
+            <h:outputText value="#{addressController.selected.location}" title="#{messages.ViewAddressTitle_location}"/>
+
+            <h:outputText value="#{messages.ViewAddressLabel_lastUpdate}"/>
+            <h:outputText value="#{addressController.selected.lastUpdate}" title="#{messages.ViewAddressTitle_lastUpdate}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            </h:outputText>
+
+            <h:outputText value="#{messages.CityHeading}"/>
+            <h:outputText value="#{addressController.selected.cityId.city}"/>
+
+        </coco:view>
+
+    </ui:composition>
+
+</html>

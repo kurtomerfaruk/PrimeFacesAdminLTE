@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <ui:composition>
+
+        <coco:edit id="MenuEditForm"
+                   renderedListener="#{menuController.selected != null}"
+                   widgetVar="MenuEditDialog"
+                   actionListener="#{menuController.save}"
+                   listForm="MenuListForm">
+
+            <h:outputLabel value="#{messages.EditMenuLabel_id}" for="id" />
+            <h:outputText id="id" value="#{menuController.selected.id}" />
+
+            <p:outputLabel value="#{messages.EditMenuLabel_menuName}" for="menuName" />
+            <p:inputText id="menuName" value="#{menuController.selected.menuName}" title="#{messages.EditMenuTitle_menuName}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.EditMenuLabel_topMenuId}" for="topMenuId" />
+            <p:inputText id="topMenuId" value="#{menuController.selected.topMenuId}" title="#{messages.EditMenuTitle_topMenuId}"/>
+
+            <p:outputLabel value="#{messages.EditMenuLabel_menuType}" for="menuType" />
+            <p:inputText id="menuType" value="#{menuController.selected.menuType}" title="#{messages.EditMenuTitle_menuType}"/>
+
+            <p:outputLabel value="#{messages.EditMenuLabel_menuLink}" for="menuLink" />
+            <p:inputText id="menuLink" value="#{menuController.selected.menuLink}" title="#{messages.EditMenuTitle_menuLink}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.EditMenuLabel_icon}" for="icon" />
+            <p:inputText id="icon" value="#{menuController.selected.icon}" title="#{messages.EditMenuTitle_icon}" size="45" maxlength="45"/>
+
+            <p:outputLabel value="#{messages.EditMenuLabel_queue}" for="queue" />
+            <p:inputText id="queue" value="#{menuController.selected.queue}" title="#{messages.EditMenuTitle_queue}"/>
+
+        </coco:edit>
+
+    </ui:composition>
+
+</html>

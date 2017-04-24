@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="MenuListForm" class="form-height">
+
+        <p:contextMenu id="MenuDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('MenuListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('MenuListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('MenuListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('MenuListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{menuController.lazyList}"
+                        rowKey="#{item.id}"
+                        selection="#{menuController.selected}"
+                        filtered="#{menuController.filtered}"
+                        rowselect=":MenuListForm:datalist:datalist:createButton,:MenuListForm:datalist:datalist:viewButton,:MenuListForm:datalist:datalist:editButton,:MenuListForm:datalist:datalist:deleteButton,:MenuListForm:MenuDataTableContextMenu"
+                        rowDblselect="document.getElementById('MenuListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":MenuListForm:datalist:datalist:createButton :MenuListForm:datalist:datalist:viewButton :MenuListForm:datalist:datalist:editButton :MenuListForm:datalist:datalist:deleteButton"
+                        selectListener="#{menuController.resetParents()}">
+
+            <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_id}"/>
+                </f:facet>
+                <h:outputText value="#{item.id}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.menuName}" filterBy="#{item.menuName}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_menuName}"/>
+                </f:facet>
+                <h:outputText value="#{item.menuName}"/>
+            </p:column>
+
+
+<!--            <p:column sortBy="#{item.topMenuId}" filterBy="#{item.topMenuId}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_topMenuId}"/>
+                </f:facet>
+                <h:outputText value="#{item.topMenuId}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.menuType}" filterBy="#{item.menuType}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_menuType}"/>
+                </f:facet>
+                <h:outputText value="#{item.menuType}"/>
+            </p:column>-->
+
+
+            <p:column sortBy="#{item.menuLink}" filterBy="#{item.menuLink}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_menuLink}"/>
+                </f:facet>
+                <h:outputText value="#{item.menuLink}"/>
+            </p:column>
+
+
+            <p:column sortBy="#{item.icon}" filterBy="#{item.icon}">
+                <f:facet name="header">
+                    <h:outputText value="#{messages.ListMenuTitle_icon}"/>
+                </f:facet>
+                <h:outputText value="#{item.icon}"/>
+            </p:column>
+
+            <!--
+                                <p:column sortBy="#{item.queue}" filterBy="#{item.queue}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{messages.ListMenuTitle_queue}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.queue}"/>
+                                </p:column>
+            -->
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{messages.Create}" actionListener="#{menuController.prepareCreate}" update=":MenuCreateForm:MenuCreateForm" oncomplete="PF('MenuCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{messages.View}" update=":MenuViewForm:MenuViewForm" oncomplete="PF('MenuViewDialog').show()" disabled="#{empty menuController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{messages.Edit}" update=":MenuEditForm:MenuEditForm" oncomplete="PF('MenuEditDialog').show()" disabled="#{empty menuController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{messages.Delete}" actionListener="#{menuController.delete}" update=":growl,datalist" disabled="#{empty menuController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

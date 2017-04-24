@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="StoreListForm" class="form-height">
+
+
+        <p:contextMenu id="StoreDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{messages.Create}" onclick="document.getElementById('StoreListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{messages.View}" onclick="document.getElementById('StoreListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{messages.Edit}" onclick="document.getElementById('StoreListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{messages.Delete}" onclick="document.getElementById('StoreListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+            <p:menuitem value="#{messages.StoreMenuItem_managerStaffId}" icon="ui-icon-search"  actionListener="#{storeController.prepareManagerStaffId}" update=":StaffViewForm:StaffViewForm" oncomplete="PF('StaffViewDialog').show()" disabled="#{empty storeController.selected.managerStaffId}"/>  
+            <p:menuitem value="#{messages.StoreMenuItem_addressId}" icon="ui-icon-search"  actionListener="#{storeController.prepareAddressId}" update=":AddressViewForm:AddressViewForm" oncomplete="PF('AddressViewDialog').show()" disabled="#{empty storeController.selected.addressId}"/>  
+            <p:menuitem value="#{messages.StoreMenuItem_customerList}" icon="ui-icon-search"  action="#{storeController.navigateCustomerList}" disabled="#{empty storeController.selected.customerList}" ajax="false"/>  
+            <p:menuitem value="#{messages.StoreMenuItem_staffList}" icon="ui-icon-search"  action="#{storeController.navigateStaffList}" disabled="#{empty storeController.selected.staffList}" ajax="false"/>  
+            <p:menuitem value="#{messages.StoreMenuItem_inventoryList}" icon="ui-icon-search"  action="#{storeController.navigateInventoryList}" disabled="#{empty storeController.selected.inventoryList}" ajax="false"/>  
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{storeController.lazyList}"
+                        rowKey="#{item.storeId}"
+                        selection="#{storeController.selected}"
+                        filtered="#{storeController.filtered}"
+                        rowselect=":StoreListForm:datalist:datalist:createButton,:StoreListForm:datalist:datalist:viewButton,:StoreListForm:datalist:datalist:editButton,:StoreListForm:datalist:datalist:deleteButton,:StoreListForm:StoreDataTableContextMenu"
+                        rowDblselect="document.getElementById('StoreListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":StoreListForm:datalist:datalist:createButton :StoreListForm:datalist:datalist:viewButton :StoreListForm:datalist:datalist:editButton :StoreListForm:datalist:datalist:deleteButton"
+                        selectListener="#{storeController.resetParents()}">
+
+            <p:ajax event="colResize" listener="#{storeController.onResize}"/>
+
+            <f:facet name="header">
+                <table style="width: 100%;">
+                    <tr style="width: 100%">
+                        <td style="width: 20%" class="no-border">
+
+                        </td>
+                        <td style="width: 60%" class="no-border">
+
+                        </td>
+                        <td style="width: 20%" class="no-border">
+                            
+                        </td>
+                    </tr>
+                </table>
+                <div class="row row-nomargin">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <h:outputText value="#{messages.ListStoreTitle}"/>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="pull-right">
+                             <p:columnToggler datasource="datalist" trigger="toggler" >
+                                <p:ajax event="toggle" listener="#{storeController.onToggle}" />
+                            </p:columnToggler>
+                            <p:commandButton id="toggler" type="button" value="#{messages.Columns}" class="btn-primary" icon="fa fa-list"/>
+                            <p:commandButton value="#{messages.Save}" actionListener="#{storeController.columnSave()}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>
+                        </div>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:columns value="#{storeController.columns}" var="column" columnIndexVar="colIndex" sortBy="#{item[column.property]}" filterBy="#{item[column.property]}" visible="#{storeController.listVisible[colIndex]}" exportable="#{storeController.listVisible[colIndex]}" width="#{storeController.listWidth[colIndex]}">
+
+                <f:facet name="header">
+                    <h:outputText value="#{column.header}" />
+                </f:facet>
+
+                <h:outputText value="#{item[column.property]}" rendered="#{column.date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                
+                <h:outputText value="#{item[column.property]}" rendered="#{!column.date}"/>
+
+            </p:columns>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn-primary" icon="fa fa-plus"   value="#{messages.Create}" actionListener="#{storeController.prepareCreate}" update=":StoreCreateForm:StoreCreateForm" oncomplete="PF('StoreCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn-primary" icon="fa fa-search" value="#{messages.View}" update=":StoreViewForm:StoreViewForm" oncomplete="PF('StoreViewDialog').show()" disabled="#{empty storeController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   styleClass="btn-primary" icon="fa fa-pencil" value="#{messages.Edit}" update=":StoreEditForm:StoreEditForm" oncomplete="PF('StoreEditDialog').show()" disabled="#{empty storeController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn-primary" icon="fa fa-trash"  value="#{messages.Delete}" actionListener="#{storeController.delete}" update=":growl,datalist" disabled="#{empty storeController.selected or !loginController.hasRole('ADMIN')}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{messages.ConfirmationHeader}" message="#{messages.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton> 
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
